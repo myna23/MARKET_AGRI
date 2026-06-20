@@ -20,7 +20,6 @@ services:
   - type: web
     name: agrimarket-frontend
     env: static
-    region: oregon
     plan: free
     rootDir: frontend
     buildCommand: npm install && npm run build
@@ -31,9 +30,6 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_URL
-        # After first deploy, copy the backend URL from Render dashboard
-        # and paste it here (e.g. https://agrimarket-backend.onrender.com)
-        # then click "Save Changes" → "Manual Deploy"
         value: https://agrimarket-backend.onrender.com
 
 # ── PostgreSQL database ───────────────────────────────────────────────────
