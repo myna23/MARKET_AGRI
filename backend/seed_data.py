@@ -11,15 +11,11 @@ from app.models.transport import TransportProvider, TransportRequest
 from passlib.hash import bcrypt
 from datetime import datetime
 
+Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 db = SessionLocal()
 
-# Always refresh products so the demo always has stock.
-# Accounts (farmers/buyers/drivers) are only created once.
-db.query(TransportRequest).delete()
-db.query(Product).delete()
-db.commit()
-print("Products cleared — re-seeding fresh stock...")
+print("DB schema recreated — seeding fresh data...")
 
 # ─── Farmers ────────────────────────────────────────────────────────────────
 farmers_data = [
@@ -34,9 +30,8 @@ farmers_data = [
 ]
 
 for fd in farmers_data:
-    if not db.query(Farmer).filter(Farmer.phone == fd["phone"]).first():
-        f = Farmer(password_hash=bcrypt.hash("farmer123"), rating=4.2, total_reviews=12, **fd)
-        db.add(f)
+    f = Farmer(password_hash=bcrypt.hash("farmer123"), rating=4.2, total_reviews=12, **fd)
+    db.add(f)
 
 db.commit()
 
@@ -50,9 +45,8 @@ buyers_data = [
 ]
 
 for bd in buyers_data:
-    if not db.query(Buyer).filter(Buyer.phone == bd["phone"]).first():
-        b = Buyer(password_hash=bcrypt.hash("buyer123"), rating=4.0, total_reviews=8, **bd)
-        db.add(b)
+    b = Buyer(password_hash=bcrypt.hash("buyer123"), rating=4.0, total_reviews=8, **bd)
+    db.add(b)
 
 db.commit()
 
@@ -123,9 +117,8 @@ transport_data = [
 ]
 
 for td in transport_data:
-    if not db.query(TransportProvider).filter(TransportProvider.phone == td["phone"]).first():
-        t = TransportProvider(password_hash=bcrypt.hash("driver123"), rating=4.3, total_reviews=20, **td)
-        db.add(t)
+    t = TransportProvider(password_hash=bcrypt.hash("driver123"), rating=4.3, total_reviews=20, **td)
+    db.add(t)
 
 db.commit()
 db.close()
