@@ -15,7 +15,7 @@ const CATEGORY_EMOJI = {
   other: '🌾',
 }
 
-export default function ProductCard({ product, showMatch = false }) {
+export default function ProductCard({ product, showMatch = false, distanceLabel = null }) {
   const emoji = CATEGORY_EMOJI[product.category] || '🌾'
 
   return (
@@ -48,11 +48,16 @@ export default function ProductCard({ product, showMatch = false }) {
               <span className="flex items-center gap-1">
                 <MapPin size={11} /> {product.farmer.village || product.farmer_village}
               </span>
-              {product.farmer.rating > 0 && (
-                <span className="flex items-center gap-0.5 text-yellow-500">
-                  <Star size={11} fill="currentColor" /> {product.farmer.rating}
-                </span>
-              )}
+              <div className="flex items-center gap-2">
+                {distanceLabel && (
+                  <span className="text-blue-600 font-medium">{distanceLabel}</span>
+                )}
+                {product.farmer.rating > 0 && (
+                  <span className="flex items-center gap-0.5 text-yellow-500">
+                    <Star size={11} fill="currentColor" /> {product.farmer.rating}
+                  </span>
+                )}
+              </div>
             </div>
           )}
         </div>

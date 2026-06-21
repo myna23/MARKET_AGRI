@@ -31,6 +31,11 @@ export const createOrder = (buyer_id, data) => api.post(`/orders/?buyer_id=${buy
 export const getBuyerOrders = (buyer_id) => api.get(`/orders/buyer/${buyer_id}`)
 export const getFarmerOrders = (farmer_id) => api.get(`/orders/farmer/${farmer_id}`)
 export const updateOrderStatus = (order_id, status) => api.put(`/orders/${order_id}/status?status=${status}`)
+export const trackOrder = (order_id) => api.get(`/orders/${order_id}/track`)
+
+// Reviews
+export const submitReview = (data) => api.post('/reviews/', data)
+export const getFarmerReviews = (farmer_id) => api.get(`/reviews/farmer/${farmer_id}`)
 
 // Transport
 export const registerTransportProvider = (data) => api.post('/transport/providers/register', data)

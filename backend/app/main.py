@@ -5,7 +5,7 @@ import os
 
 from .database import engine, Base
 from . import models  # ensure all models are registered
-from .api import farmers, buyers, products, orders, transport, ai_match, ussd, payments
+from .api import farmers, buyers, products, orders, transport, ai_match, ussd, payments, reviews, sms
 
 Base.metadata.create_all(bind=engine)
 
@@ -36,6 +36,8 @@ app.include_router(transport.router)
 app.include_router(ai_match.router)
 app.include_router(ussd.router)
 app.include_router(payments.router)
+app.include_router(reviews.router)
+app.include_router(sms.router)
 
 
 @app.get("/")
